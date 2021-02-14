@@ -1,0 +1,7 @@
+.container {
+    position: relative;
+    float: left;
+    width: calc(100% - 50px);
+    height: auto;
+    padding: 25px;
+}

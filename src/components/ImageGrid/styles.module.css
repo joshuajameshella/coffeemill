@@ -1,0 +1,21 @@
+:root {
+    /* Default image column number */
+    --columnCount: 2;
+}
+
+.container {
+    column-count: var(--columnCount);
+    column-gap: 5px;
+}
+
+@media (max-width: 800px) {
+    .container {
+        column-count: 1;
+    }
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.desktopDisplay {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(100% - 250px);
+    height: auto;
+}
+
+.mobileDisplay {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    width: 100%;
+    height: auto;
+}
