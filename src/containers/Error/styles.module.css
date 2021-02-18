@@ -1,0 +1,33 @@
+.container {
+    position: relative;
+    float: left;
+    width: calc(100% - 50px);
+    height: auto;
+    padding: 25px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.display {
+    width: 50%;
+    max-width: 500px;
+    display: block;
+    margin: 10vh auto 10vh auto;
+}
+
+.text {
+    position: relative;
+    float: left;
+    width: 70%;
+    margin: 0 15% 0 15%;
+    text-align: center;
+    line-height: 2;
+    font-size: 40px;
+    font-family: 'Amatic SC', cursive;
+}
+
+.button {
+    position: relative;
+    float: left;
+    width: 200px;
+    margin-left: 100px;
+}

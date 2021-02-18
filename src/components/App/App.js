@@ -1,7 +1,10 @@
 import React from "react";
-import Home from '../../containers/Home';
-import NavigationBar from "../NavigationBar";
 import styles from './styles.module.css';
+import { Switch, Route } from 'react-router-dom';
+
+import NavigationBar from "../NavigationBar";
+import Home from '../../containers/Home';
+import Error from '../../containers/Error';
 
 class App extends React.Component {
     state = {
@@ -24,8 +27,16 @@ class App extends React.Component {
         return (
             <>
                 <NavigationBar isMobile={this.state.isMobile}/>
+
                 <div className={this.state.isMobile ? styles.mobileDisplay : styles.desktopDisplay}>
-                    <Home />
+                    <Switch>
+                        <Route exact path='/' component={Home} />
+                        {/*<Route exact path='/menu' component={Menu} />*/}
+                        {/*<Route exact path='/about' component={About} />*/}
+                        {/*<Route exact path='/locations' component={Locations} />*/}
+                        {/*<Route exact path='/contact' component={OrderContact} />*/}
+                        <Route component={Error} />
+                    </Switch>
                 </div>
             </>
         );
