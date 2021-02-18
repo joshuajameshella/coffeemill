@@ -14,7 +14,7 @@ class Home extends React.Component {
 
                 {ImageLinkData.map((properties) => {
                     return(
-                        <ImageLink properties={properties} />
+                        <ImageLink key={properties.linkText} properties={properties} />
                     );
                 })}
 

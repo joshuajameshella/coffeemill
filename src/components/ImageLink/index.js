@@ -13,11 +13,12 @@ class ImageLink extends React.Component {
                     alt={this.props.properties.linkText}
                     className={styles.image}
                 />
-                <p className={styles.mainText}>{this.props.properties.mainText}</p>
-                <p className={styles.subText}>{this.props.properties.subText}</p>
-                <a href={this.props.properties.link}>
-                    <p className={styles.linkText}>{this.props.properties.linkText}</p>
-                </a>
+
+                <div className={styles.text_container}>
+                    <p className={styles.mainText}>{this.props.properties.mainText}</p>
+                    <p className={styles.subText}>{this.props.properties.subText}</p>
+                    <a href={this.props.properties.link} className={styles.linkText}>{this.props.properties.linkText}</a>
+                </div>
             </div>
         );
     }
@@ -28,3 +29,5 @@ export default (ImageLink);
 ImageLink.propTypes = {
     properties: PropTypes.object.isRequired,
 };
+
+// <p className={styles.linkText}>{this.props.properties.linkText}</p>

@@ -3,6 +3,7 @@
     float: left;
     width: calc(100% - 50px);
     height: auto;
+    max-height: calc(100vh - 71px);
     padding: 25px;
     color: rgba(0, 0, 0, 0.6);
 }
@@ -12,6 +13,12 @@
     max-width: 500px;
     display: block;
     margin: 10vh auto 10vh auto;
+}
+
+@media (max-width: 660px) {
+    .display {
+        margin: 5vh auto 5vh auto;
+    }
 }
 
 .text {

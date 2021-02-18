@@ -14,7 +14,7 @@ class ImageGrid extends React.Component {
                         // Generate the styling, based on the number of images in each column
                         const imageContainer = {
                             width: '100%',
-                            height: `calc((100vh / ${imageList.length}) - 5px)`,
+                            height: `calc((100% / ${imageList.length}) - 5px)`,
                             marginBottom: 5,
                             overflow: 'hidden',
                         };
