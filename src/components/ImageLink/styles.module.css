@@ -1,0 +1,69 @@
+
+.container {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 80vh;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(60%);
+}
+
+.mainText {
+    text-align: center;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.subText {
+    text-align: center;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.linkText {
+    text-align: center;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 20px;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+}
+
+@media (max-width: 760px) {
+    .container {
+        height: 60vh;
+    }
+    .mainText {
+        top: 25%;
+    }
+    .subText {
+        top: 47.5%;
+    }
+    .linkText {
+        top: 65%;
+    }
+}

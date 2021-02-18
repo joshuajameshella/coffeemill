@@ -2,7 +2,7 @@ import { unmountComponentAtNode } from "react-dom";
 import ImageGrid from "../ImageGrid";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
-import { ImageData } from '../../containers/Home/landingImages';
+import { ImageGridData } from '../../containers/Home/landingImages';
 
 let container = null;
 
@@ -25,13 +25,13 @@ describe("ImageGrid", () => {
 
     // Check that the component renders correctly
     it("correctly renders", () => {
-        shallow(<ImageGrid images={ImageData}/>);
+        shallow(<ImageGrid images={ImageGridData}/>);
     });
 
     // Check that each image is rendered, and has the correct attributes attached
     it("renders each image, with the expected attributes", () => {
-        const wrapper = shallow(<ImageGrid images={ImageData}/>);
-        ImageData.forEach((imageList) => {
+        const wrapper = shallow(<ImageGrid images={ImageGridData}/>);
+        ImageGridData.forEach((imageList) => {
            imageList.forEach((image) => {
                expect(wrapper.findWhere((img) => img.prop("src") === image.image).length).toEqual(1)
                expect(wrapper.findWhere((img) => img.prop("src") === image.image).prop("alt")).toEqual(image.description)
