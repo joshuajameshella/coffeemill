@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
-import { Login } from './login';
+import { Login } from './credentials';
 
 // ProtectedRoute is the security protecting specific components from being accessed
 class ProtectedRoute extends React.Component {

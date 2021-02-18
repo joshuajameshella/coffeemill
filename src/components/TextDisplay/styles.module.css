@@ -1,0 +1,86 @@
+.container {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+
+.image {
+    position: relative;
+    float: left;
+    width: 45%;
+    height: 100%;
+    max-height: 500px;
+    margin-right: 5%;
+    margin-left: 0;
+    overflow: hidden;
+    object-fit: cover;
+
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s; /* Firefox < 16 */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+    animation: fadein 2s;
+}
+
+.text {
+    position: relative;
+    float: left;
+    width: 50%;
+    font-size: 20px;
+    /*margin: 50px 0 50px 0;*/
+    line-height: 2;
+    text-align: center;
+}
+
+.text:first-of-type {
+    margin-top: 50px;
+}
+.text:last-of-type {
+    margin-bottom: 50px;
+}
+
+.container:nth-child(even) .image {
+    float: right;
+    margin-left: 5%;
+    margin-right: 0;
+}
+
+@media (max-width: 850px) {
+    .container {
+        overflow: auto;
+    }
+    .image {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .text {
+        width: 100%;
+    }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

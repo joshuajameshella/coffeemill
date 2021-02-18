@@ -1,0 +1,9 @@
+.container {
+    position: relative;
+    float: left;
+    width: calc(100% - 50px);
+    height: auto;
+    padding: 25px;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 300;
+}

@@ -5,6 +5,7 @@ import ProtectedRoute from "../ProtectedRoute";
 
 import NavigationBar from "../NavigationBar";
 import Home from '../../containers/Home';
+import About from '../../containers/About';
 import Login from '../../containers/Login';
 import Admin from '../../containers/Admin';
 import Error from '../../containers/Error';
@@ -34,10 +35,12 @@ class App extends React.Component {
                 <div className={this.state.isMobile ? styles.mobileDisplay : styles.desktopDisplay}>
                     <Switch>
                         <Route exact path='/' component={Home} />
+                        <Route exact path='/about' component={About} />
+
                         {/*<Route exact path='/menu' component={Menu} />*/}
-                        {/*<Route exact path='/about' component={About} />*/}
                         {/*<Route exact path='/locations' component={Locations} />*/}
                         {/*<Route exact path='/contact' component={OrderContact} />*/}
+
                         <ProtectedRoute path={'/admin'} component={Admin}/>
                         <Route exact path='/login' component={Login} />
                         <Route component={Error} />

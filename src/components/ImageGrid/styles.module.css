@@ -6,7 +6,6 @@
 .container {
     column-count: var(--columnCount);
     column-gap: 5px;
-    height: 100vh;
 }
 
 @media (max-width: 800px) {
