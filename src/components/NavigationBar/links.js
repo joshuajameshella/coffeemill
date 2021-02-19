@@ -16,8 +16,8 @@ export const PAGES = [
     link: "/menu"
   },
   {
-    name: "LOCATIONS",
-    link: "/locations"
+    name: "LOCATION",
+    link: "/location"
   },
   {
     name: "CONTACT",

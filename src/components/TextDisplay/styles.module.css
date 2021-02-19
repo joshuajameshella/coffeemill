@@ -7,7 +7,6 @@
     margin-bottom: 40px;
 }
 
-
 .image {
     position: relative;
     float: left;
@@ -30,7 +29,6 @@
     float: left;
     width: 50%;
     font-size: 20px;
-    /*margin: 50px 0 50px 0;*/
     line-height: 2;
     text-align: center;
 }
@@ -48,7 +46,16 @@
     margin-right: 0;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1440px) {
+    .text:first-of-type {
+        margin-top: 20px;
+    }
+    .text:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 1100px) {
     .container {
         overflow: auto;
     }
@@ -59,6 +66,12 @@
     }
     .text {
         width: 100%;
+    }
+    .text:first-of-type {
+        margin-top: 50px;
+    }
+    .text:last-of-type {
+        margin-bottom: 50px;
     }
 }
 
