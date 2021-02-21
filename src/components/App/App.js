@@ -6,6 +6,7 @@ import ProtectedRoute from "../ProtectedRoute";
 import NavigationBar from "../NavigationBar";
 import Home from '../../containers/Home';
 import About from '../../containers/About';
+import Menu from '../../containers/Menu';
 import Location from '../../containers/Location';
 import Login from '../../containers/Login';
 import Admin from '../../containers/Admin';
@@ -37,8 +38,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path='/' component={Home} />
                         <Route exact path='/about' component={About} />
-
-                        {/*<Route exact path='/menu' component={Menu} />*/}
+                        <Route exact path='/menu' component={Menu} />
                         <Route exact path='/location' component={Location} />
                         {/*<Route exact path='/contact' component={OrderContact} />*/}
 

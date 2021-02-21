@@ -1,0 +1,25 @@
+.container {
+    position: relative;
+    float: left;
+    width: calc(100% - 50px);
+    height: auto;
+    padding: 25px;
+    color: #505050;
+    font-weight: 300;
+}
+
+.tab_container {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+
+.menu_pointer {
+    position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    font-style: italic;
+}
