@@ -16,7 +16,7 @@ Finally, run the following commands: `npm install` & `npm start`. The project sh
 
 ---
 
-## :construction: Project under construction :construction:
+##  :construction: Project under construction  :construction:
 
 At the moment, data on the website is retrieved from hard-coded JavaScript files.
 
