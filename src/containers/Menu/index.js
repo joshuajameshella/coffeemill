@@ -1,39 +1,22 @@
 import React from 'react';
 import styles from './styles.module.css';
-import MenuCard from "../../components/MenuCard";
-import Grid from "@material-ui/core/Grid";
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { MobileView } from "react-device-detect";
-import { Coffee } from './coffee';
-import { Cakes } from './cakes';
 import { StyledTabs, StyledTab } from './customStyles';
+import Grid from "@material-ui/core/Grid";
+import MenuCard from "../../components/MenuCard";
+import { MobileView } from "react-device-detect";
 
-// TabPanel is the component which contains the contents for each tab
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-auto-tabpanel-${index}`}
-            aria-labelledby={`scrollable-auto-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+// Data to be displayed on the Menu tabs
+import { Treats } from './data/treats';
+import { Cakes } from './data/cakes';
 
 // Menu is the page which contains the data for each item sold at the shop.
 // It is separated into two categories which are shown on different tabs.
 class Menu extends React.Component {
+
+    // Coffee is stored in state, as this will be used to test the API call later.
     state = {
-        value: 0
+        value: 0,
+        coffee: [],
     };
 
     handleChange = (event, value) => {
@@ -45,8 +28,9 @@ class Menu extends React.Component {
             <div className={styles.container}>
 
                 <div className={styles.tab_container}>
-                    <StyledTabs value={this.state.value} onChange={this.handleChange} aria-label="styled tabs example">
+                    <StyledTabs value={this.state.value} onChange={this.handleChange}>
                         <StyledTab label="Coffee" />
+                        <StyledTab label="Treats" />
                         <StyledTab label="Cakes" />
                     </StyledTabs>
                 </div>
@@ -55,17 +39,27 @@ class Menu extends React.Component {
                     <p className={styles.menu_pointer}>{" - Click image for more information - "}</p>
                 </MobileView>
 
-                <TabPanel value={this.state.value} index={0}>
+                <div hidden={this.state.value !== 0}>
                     <Grid container spacing={3}>
-                        {Coffee.map((item, index) => {
+                        {this.state.coffee.map((item) => {
+                            return (
+                                <MenuCard key={item.name} properties={item} />
+                            );
+                        })}
+                    </Grid>
+                </div>
+
+                <div hidden={this.state.value !== 1}>
+                    <Grid container spacing={3}>
+                        {Treats.map((item, index) => {
                             return (
                                 <MenuCard key={item.name + index} properties={item} />
                             );
                         })}
                     </Grid>
-                </TabPanel>
+                </div>
 
-                <TabPanel value={this.state.value} index={1}>
+                <div hidden={this.state.value !== 2}>
                     <Grid container spacing={3}>
                         {Cakes.map((item, index) => {
                             return (
@@ -73,7 +67,7 @@ class Menu extends React.Component {
                             );
                         })}
                     </Grid>
-                </TabPanel>
+                </div>
 
             </div>
         );

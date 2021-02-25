@@ -16,7 +16,7 @@ export const Paragraphs = [
     {
         image: {
             path: window,
-            description: "Shop front",
+            description: "Shop front 2",
         },
         text: [
             "I don’t have any formal training in cookery, I was taught to bake by my grandma, basically as soon as I could stand. I don’t remember a time when we weren’t baking, and experimenting in her kitchen. My grandma definitely supported my passion for baking, always helping and encouraging me along the way. It was always our dream to open a coffee shop and bakery, and I hope I made her proud.",

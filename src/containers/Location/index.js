@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './styles.module.css';
 import InteractiveMap from '../../components/InteractiveMap';
-import { OpeningTimes } from "./openingTimes";
 import window from '../../images/window.jpeg';
-
-const directionsLink = "https://www.google.co.uk/maps/place/The+Coffee+Mill+%26+Cakes/@53.5910664,-1.6532915,17z/data=!4m5!3m4!1s0x487bd87c67fc0001:0x5bdd0dbaaf472c72!8m2!3d53.5913912!4d-1.6530447";
+import { OpeningTimes, directionsLink } from "./openingTimes";
 
 // Location is the page holding the geography & opening time information.
 // Each day's opening time & an interactive map is rendered on this page

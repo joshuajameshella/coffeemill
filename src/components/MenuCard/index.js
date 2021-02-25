@@ -46,6 +46,13 @@ class MenuCard extends React.Component {
                             alt={item.name}
                             className={styles.cover_image}
                         />
+
+                        <div className={styles.cover_overlay} />
+
+                        <div className={styles.text_container}>
+                            <p className={styles.cover_text}>{`${item.name}`}</p>
+                        </div>
+
                     </ButtonBase>
                 </Grid>
 

@@ -10,7 +10,11 @@ class TextDisplay extends React.Component {
             <>
                 {this.props.content.map((paragraph) => {
                     return(
-                        <div className={styles.container}>
+                        <div
+                            key={paragraph.image.description}
+                            className={styles.container}
+                        >
+
                             <img
                                 src={paragraph.image.path}
                                 alt={paragraph.image.description}
@@ -19,9 +23,15 @@ class TextDisplay extends React.Component {
 
                             {paragraph.text.map((sentence) => {
                                 return (
-                                    <p className={styles.text}>{sentence}</p>
+                                    <p
+                                        key={sentence}
+                                        className={styles.text}
+                                    >
+                                        {sentence}
+                                    </p>
                                 );
                             })}
+
                         </div>
                     );
                 })}
