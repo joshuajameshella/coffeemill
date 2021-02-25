@@ -10,10 +10,11 @@ The website is built on the React framework, and will expand in scope to be a fu
 
 To run the project, first clone the repository onto your local machine.
 
-You will need to create a `credentials.js` file in the project root, containing your own exported `MapboxAccessToken` variable.
+You will need to create a `credentials.js` file in the project root, containing your own exported `MapboxAccessToken` variable. [Available Here.](https://www.mapbox.com/)
 
 Finally, run the following commands: `npm install` & `npm start`. The project should be running on `localhost:3000`
 
+---
 
 ## :construction: Project under construction :construction:
 
