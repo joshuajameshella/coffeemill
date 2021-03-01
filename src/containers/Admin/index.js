@@ -1,30 +1,18 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import MenuItem from "@material-ui/core/MenuItem";
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import TextField from '@material-ui/core/TextField';
-
 import styles from './styles.module.css';
 import Coffee from './coffee';
-import {MenuItem} from "@material-ui/core";
+import New from './new';
 
 // Admin is the terminal used by admin users to modify the website data. It sits behind a
 // protected route, as a cost-effective security measure
 class Admin extends React.Component {
     state = {
-        value: "coffee"
-    };
-
-    handleChange = (event) => {
-        console.log(event);
-        // const pageMap = ["coffee", "cake"];
-        this.setState({ value: event });
+        value: "coffee",
     };
 
     render() {
@@ -47,24 +35,19 @@ class Admin extends React.Component {
                 >
                     <MenuItem value={"coffee"} style={{ padding: 20 }}>Coffee</MenuItem>
                     <MenuItem value={"cake"} style={{ padding: 20 }}>Cake</MenuItem>
+                    <MenuItem value={"new"} style={{ padding: 20 }}>New</MenuItem>
                 </TextField>
-
-
 
                 <h1 className={styles.admin_header}>{"Admin Page"}</h1>
 
                 <div className={styles.admin_body}>
                     {this.state.value === "coffee" ? <Coffee /> : ''}
+                    {this.state.value === "new" ? <New /> : ''}
                 </div>
-            </>
 
+            </>
         );
     }
 }
 
 export default (Admin);
-//
-// <form action="/" encType="multipart/form-data" method="POST">
-//     <input type="file" name="myImage" accept="image/*"/>
-//     <input type="submit" value="Upload Photo"/>
-// </form>

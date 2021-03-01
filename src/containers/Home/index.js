@@ -9,7 +9,6 @@ class Home extends React.Component {
     render() {
         return (
             <div className={styles.container}>
-
                 <ImageGrid images={ImageGridData} />
 
                 {ImageLinkData.map((properties) => {
@@ -17,7 +16,6 @@ class Home extends React.Component {
                         <ImageLink key={properties.linkText} properties={properties} />
                     );
                 })}
-
             </div>
         );
     }

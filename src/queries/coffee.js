@@ -1,10 +1,15 @@
 
-export function GetCoffee() {
-    // const request = new Request('http://127.0.0.1:8080/coffee', { method: 'GET' });
-    const request = new Request('http://192.168.0.36:8080/coffee', { method: 'GET' });
+const url = 'http://192.168.0.36:8080/coffee';
 
-    request.headers.set("Access-Control-Allow-Origin", "*");
-    request.headers.set("Accept-Encoding", "gzip, deflate, br");
+export function GetCoffee() {
+
+    const request = new Request(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
+    });
 
     return fetch(request)
         .then(response => {
