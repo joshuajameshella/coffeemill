@@ -34,3 +34,29 @@ export async function UploadImage(imagePath, uuid) {
 
     reader.readAsDataURL(blob);
 }
+
+
+export async function UploadImageTest(imageData, uuid) {
+
+    let payload = { image: imageData, name: uuid };
+    const request = new Request(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(payload)
+    });
+
+    return fetch(request).then(res => {
+        return {
+            status: res.status,
+            message: 'Successfully uploaded image'
+        };
+    }).catch(res => {
+        return {
+            status: res.status,
+            message: 'Unable to upload image'
+        };
+    });
+}

@@ -5,10 +5,19 @@ import ProductForm from '../ProductForm';
 import styles from './styles.module.css';
 import unknown from '../../images/treats/Unknown.png';
 
+
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
 // AdminModal is the display shown to the user when editing or creating a product
 class AdminModal extends React.Component {
     state = {
         image: "",
+        imageData: ""
     };
 
     render() {
@@ -26,8 +35,16 @@ class AdminModal extends React.Component {
                             type="file"
                             accept="image/*"
                             onChange={(e) => {
+
+                                toBase64(e.target.files[0]).then((res) => {
+                                    this.setState({
+                                        imageData: res
+                                    });
+                                }).catch((err) => {
+                                    console.log(err);
+                                });
                                 this.setState({
-                                    image: URL.createObjectURL(e.target.files[0])
+                                    image: URL.createObjectURL(e.target.files[0]),
                                 })
                             }}
                             className={styles.image_upload}
@@ -42,7 +59,7 @@ class AdminModal extends React.Component {
                     </div>
 
                     <div className={styles.info_container}>
-                        <ProductForm image={this.state.image} />
+                        <ProductForm image={this.state.imageData} />
                     </div>
 
                 </div>

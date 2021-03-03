@@ -7,21 +7,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
-import { GetCoffee } from "../../queries/coffee";
 import styles from './styles.module.css';
+import PropTypes from "prop-types";
 
-// Coffee ...
-class Coffee extends React.Component {
-    state = {
-        coffee: [],
-    };
-
-    componentDidMount = () => {
-        GetCoffee().then(json => {
-            this.setState({ coffee: json });
-        });
-    };
-
+// ProductTable ...
+class ProductTable extends React.Component {
     render() {
         return (
             <>
@@ -36,7 +26,7 @@ class Coffee extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.coffee.map((item) => (
+                            {this.props.products.map((item) => (
                                 <TableRow key={item._id}>
                                     <TableCell scope="row">
                                         <div className={styles.image_container}>
@@ -56,4 +46,8 @@ class Coffee extends React.Component {
     }
 }
 
-export default (Coffee);
+export default (ProductTable);
+
+ProductTable.propTypes = {
+    products: PropTypes.array.isRequired,
+};

@@ -1,15 +1,14 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import styles from './styles.module.css';
-import Coffee from './coffee';
-import Button from "@material-ui/core/Button";
 import AdminModal from "../../components/AdminModal";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import ProductTable from "../../components/ProductTable";
+import styles from './styles.module.css';
+import { GetCoffee } from "../../queries/coffee";
 
 // Admin is the terminal used by admin users to modify the website data. It sits behind a
 // protected route, as a cost-effective security measure
@@ -20,9 +19,16 @@ class Admin extends React.Component {
         this.state = {
             value: "coffee",
             modalOpen: false,
+            coffee: [],
         };
         this.toggleModal = this.toggleModal.bind(this);
     }
+
+    componentDidMount = () => {
+        GetCoffee().then(json => {
+            this.setState({ coffee: json });
+        });
+    };
 
     handleClose = () => {
         this.setState({
@@ -73,7 +79,7 @@ class Admin extends React.Component {
                         <MenuItem value={"cakes"} style={{ padding: 20 }}>Cakes</MenuItem>
                     </TextField>
 
-                    {this.state.value === "coffee" ? <Coffee /> : ''}
+                    {this.state.value === "coffee" ? <ProductTable products={this.state.coffee} /> : ''}
                     {this.state.value === "treats" ? <></> : ''}
                     {this.state.value === "cakes" ? <></> : ''}
 

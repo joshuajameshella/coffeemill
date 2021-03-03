@@ -50,13 +50,17 @@ class Menu extends React.Component {
                 </MobileView>
 
                 <div hidden={this.state.value !== 0}>
-                    <Grid container spacing={3}>
-                        {this.state.coffee.map((item) => {
-                            return (
-                                <MenuCard key={item._id} properties={item} />
-                            );
-                        })}
-                    </Grid>
+                    {this.state.coffee.length === 0 ?
+                        <p className={styles.menu_pointer}>{"Unable to find any coffee data..."}</p>
+                        :
+                        <Grid container spacing={3}>
+                            {this.state.coffee.map((item) => {
+                                return (
+                                    <MenuCard key={item._id} properties={item} />
+                                );
+                            })}
+                        </Grid>
+                    }
                 </div>
 
                 <div hidden={this.state.value !== 1}>

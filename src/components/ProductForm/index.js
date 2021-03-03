@@ -12,7 +12,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {useFormik} from "formik";
 import {v4 as uuidv4} from "uuid";
-import {UploadImage} from "../../queries/image";
+import {UploadImage, UploadImageTest} from "../../queries/image";
 import {AddCoffee} from "../../queries/coffee";
 
 // Alert is the function which renders the Success or Failure of Admin functions
@@ -25,7 +25,7 @@ function SubmitData(values) {
 
     // Set a new unique image identifier
     const UUID = uuidv4();
-    return UploadImage(values.productImage, UUID)
+    return UploadImageTest(values.productImage, UUID)
         .then(() => {
 
             const coffeeData = {
@@ -63,44 +63,43 @@ const ProductForm = (props) => {
         },
 
         onSubmit: values => {
+            let formError = false;
             values.productImage = props.image;
 
-            if (values.productName === '') {
+            setNameErr(false);
+            setPriceErr(false);
+            setDescriptionErr(false);
+            setImageErr(false);
+
+            if (values.productName.length === 0) {
                 setNameErr(true);
-            } else {
-                setNameErr(false)
+                formError = true;
             }
-
-            if (values.productPrice === '') {
+            if (values.productPrice.length === 0) {
                 setPriceErr(true);
-            } else {
-                setPriceErr(false)
+                formError = true;
             }
-
-            if (values.productDescription === '') {
+            if (values.productDescription.length === 0) {
                 setDescriptionErr(true);
-            } else {
-                setDescriptionErr(false)
+                formError = true;
             }
-
-            if (values.productImage === '') {
+            if (values.productImage.length === 0) {
                 setImageErr(true);
-            } else {
-                setImageErr(false);
+                formError = true;
             }
 
             // If no errors are present in the form, submit data
-            if (!nameErr && !priceErr && !descriptionErr && !imageErr) {
+            if (!formError) {
                 SubmitData(values)
                     .then(() => {
                         setSnackbarStatus("success");
                         setSnackbarMessage("Successfully Added Coffee!");
                         setSnackbarOpen(true);
                     }).catch((err) => {
-                        setSnackbarStatus("error");
-                        setSnackbarMessage(err.message);
-                        setSnackbarOpen(true);
-                    })
+                    setSnackbarStatus("error");
+                    setSnackbarMessage(err.message);
+                    setSnackbarOpen(true);
+                })
             }
         }
     });
