@@ -33,14 +33,7 @@ class MenuModal extends React.Component {
                     <div className={styles.text_container}>
                         <h1 className={styles.dialog_title}>{item.name}</h1>
                         <p className={styles.dialog_text}>{`£ ${item.price}`}</p>
-                        {item.description.map((text, index) => (
-                            <p
-                                key={index}
-                                className={styles.dialog_text}
-                            >
-                                {text}
-                            </p>
-                        ))}
+                        <p className={styles.dialog_text}>{item.description}</p>
                     </div>
 
                 </div>

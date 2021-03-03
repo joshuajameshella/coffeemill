@@ -13,6 +13,7 @@
     overflow: hidden;
     height: 100%;
     width: 100%;
+    min-height: 50vh;
 }
 
 .cover_overlay {

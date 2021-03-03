@@ -1,0 +1,77 @@
+
+.dialog_body {
+    position: relative;
+    float: left;
+    padding: 20px;
+    width: calc(100% - 40px);
+}
+
+.dialog_title {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+
+.image_container {
+    position: relative;
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+
+.image_upload {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.image_display {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: 20px 0 20px 0;
+    border: 1px solid #505050;
+}
+
+.image {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info_container {
+    position: relative;
+    float: left;
+    width: 55%;
+    margin: 37px 5% 0 10%;
+    height: 100%;
+}
+
+.text_field {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
+
+.divider {
+    position: relative;
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+@media (max-width: 650px) {
+    .image_container {
+        width: 100%;
+    }
+    .info_container {
+        width: 100%;
+        margin: 50px 0 50px 0;
+    }
+}

@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import MenuCard from "../../components/MenuCard";
 import { MobileView } from "react-device-detect";
 
+import { GetCoffee } from '../../queries/coffee';
+
 // Data to be displayed on the Menu tabs
 import { Treats } from './data/treats';
 import { Cakes } from './data/cakes';
@@ -18,6 +20,14 @@ class Menu extends React.Component {
         value: 0,
         coffee: [],
     };
+
+    componentDidMount() {
+        GetCoffee().then((data) => {
+            this.setState({ coffee: data });
+        }).catch((err) => {
+            console.log("Unable to retrieve Coffee Data: " + err);
+        })
+    }
 
     handleChange = (event, value) => {
         this.setState({ value });
@@ -43,7 +53,7 @@ class Menu extends React.Component {
                     <Grid container spacing={3}>
                         {this.state.coffee.map((item) => {
                             return (
-                                <MenuCard key={item.name} properties={item} />
+                                <MenuCard key={item._id} properties={item} />
                             );
                         })}
                     </Grid>

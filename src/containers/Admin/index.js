@@ -6,14 +6,35 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import styles from './styles.module.css';
 import Coffee from './coffee';
-import New from './new';
+import Button from "@material-ui/core/Button";
+import AdminModal from "../../components/AdminModal";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 // Admin is the terminal used by admin users to modify the website data. It sits behind a
 // protected route, as a cost-effective security measure
 class Admin extends React.Component {
-    state = {
-        value: "coffee",
-    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: "coffee",
+            modalOpen: false,
+        };
+        this.toggleModal = this.toggleModal.bind(this);
+    }
+
+    handleClose = () => {
+        this.setState({
+            modalOpen: false
+        })
+    }
+
+    toggleModal = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen,
+        });
+    }
 
     render() {
         return (
@@ -24,25 +45,39 @@ class Admin extends React.Component {
                     </Toolbar>
                 </AppBar>
 
-                <TextField
-                    select
-                    onChange={(e) => {
-                        this.setState({ value: e.target.value });
-                    }}
-                    value={this.state.value}
-                    variant={'outlined'}
-                    className={styles.page_selector}
-                >
-                    <MenuItem value={"coffee"} style={{ padding: 20 }}>Coffee</MenuItem>
-                    <MenuItem value={"cake"} style={{ padding: 20 }}>Cake</MenuItem>
-                    <MenuItem value={"new"} style={{ padding: 20 }}>New</MenuItem>
-                </TextField>
-
-                <h1 className={styles.admin_header}>{"Admin Page"}</h1>
-
                 <div className={styles.admin_body}>
+
+                    <h1 className={styles.admin_header}>{"Product Info"}</h1>
+
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => {this.toggleModal()}}
+                        style={{ width: 200, margin: '0 calc(50% - 100px) 0 calc(50% - 100px)' }}
+                    >
+                        Add new product
+                    </Button>
+
+                    <TextField
+                        select
+                        onChange={(e) => {
+                            this.setState({ value: e.target.value });
+                        }}
+                        value={this.state.value}
+                        variant={'outlined'}
+                        fullWidth={true}
+                        style={{ margin: '20px 0 20px 0' }}
+                    >
+                        <MenuItem value={"coffee"} style={{ padding: 20 }}>Coffee</MenuItem>
+                        <MenuItem value={"treats"} style={{ padding: 20 }}>Treats</MenuItem>
+                        <MenuItem value={"cakes"} style={{ padding: 20 }}>Cakes</MenuItem>
+                    </TextField>
+
                     {this.state.value === "coffee" ? <Coffee /> : ''}
-                    {this.state.value === "new" ? <New /> : ''}
+                    {this.state.value === "treats" ? <></> : ''}
+                    {this.state.value === "cakes" ? <></> : ''}
+
+                    {this.state.modalOpen ? <AdminModal onClose={this.handleClose} /> : ''}
                 </div>
 
             </>

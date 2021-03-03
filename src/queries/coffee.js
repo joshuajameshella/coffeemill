@@ -25,3 +25,34 @@ export function GetCoffee() {
             console.error(error);
         });
 }
+
+export function AddCoffee(data) {
+    const payload = {
+        name: data.name,
+        price: data.price,
+        image: data.image,
+        description: data.description,
+        visible: data.visible,
+    }
+
+    const request = new Request(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+        method: 'POST'
+    });
+
+    return fetch(request).then(res => {
+        return {
+            status: res.status,
+            message: 'Successfully uploaded coffee data'
+        };
+    }).catch(res => {
+        return {
+            status: res.status,
+            message: 'Unable to upload coffee data'
+        };
+    });
+}
