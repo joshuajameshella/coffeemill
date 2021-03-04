@@ -16,3 +16,10 @@
     height: 100%;
     object-fit: cover;
 }
+
+@media (max-width: 850px) {
+    .image_container {
+        width: 80px;
+        height: 80px;
+    }
+}

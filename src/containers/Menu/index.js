@@ -4,12 +4,7 @@ import { StyledTabs, StyledTab } from './customStyles';
 import Grid from "@material-ui/core/Grid";
 import MenuCard from "../../components/MenuCard";
 import { MobileView } from "react-device-detect";
-
-import { GetCoffee } from '../../queries/coffee';
-
-// Data to be displayed on the Menu tabs
-import { Treats } from './data/treats';
-import { Cakes } from './data/cakes';
+import { GetAllProducts } from '../../queries/index';
 
 // Menu is the page which contains the data for each item sold at the shop.
 // It is separated into two categories which are shown on different tabs.
@@ -19,14 +14,29 @@ class Menu extends React.Component {
     state = {
         value: 0,
         coffee: [],
+        treats: [],
+        cakes: [],
     };
 
     componentDidMount() {
-        GetCoffee().then((data) => {
+
+        GetAllProducts("coffee").then((data) => {
             this.setState({ coffee: data });
         }).catch((err) => {
             console.log("Unable to retrieve Coffee Data: " + err);
-        })
+        });
+
+        GetAllProducts("treats").then((data) => {
+            this.setState({ treats: data });
+        }).catch((err) => {
+            console.log("Unable to retrieve Treats Data: " + err);
+        });
+
+        GetAllProducts("cakes").then((data) => {
+            this.setState({ cakes: data });
+        }).catch((err) => {
+            console.log("Unable to retrieve Cakes Data: " + err);
+        });
     }
 
     handleChange = (event, value) => {
@@ -64,23 +74,31 @@ class Menu extends React.Component {
                 </div>
 
                 <div hidden={this.state.value !== 1}>
-                    <Grid container spacing={3}>
-                        {Treats.map((item, index) => {
-                            return (
-                                <MenuCard key={item.name + index} properties={item} />
-                            );
-                        })}
-                    </Grid>
+                    {this.state.coffee.length === 0 ?
+                        <p className={styles.menu_pointer}>{"Unable to find any treats data..."}</p>
+                        :
+                        <Grid container spacing={3}>
+                            {this.state.treats.map((item) => {
+                                return (
+                                    <MenuCard key={item._id} properties={item} />
+                                );
+                            })}
+                        </Grid>
+                    }
                 </div>
 
                 <div hidden={this.state.value !== 2}>
-                    <Grid container spacing={3}>
-                        {Cakes.map((item, index) => {
-                            return (
-                                <MenuCard key={item.name + index} properties={item} />
-                            );
-                        })}
-                    </Grid>
+                    {this.state.cakes.length === 0 ?
+                        <p className={styles.menu_pointer}>{"Unable to find any cake data..."}</p>
+                        :
+                        <Grid container spacing={3}>
+                            {this.state.cakes.map((item) => {
+                                return (
+                                    <MenuCard key={item._id} properties={item} />
+                                );
+                            })}
+                        </Grid>
+                    }
                 </div>
 
             </div>

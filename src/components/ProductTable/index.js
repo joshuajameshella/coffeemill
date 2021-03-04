@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import styles from './styles.module.css';
 import PropTypes from "prop-types";
+import IconButton from "@material-ui/core/IconButton";
+
 
 // ProductTable ...
 class ProductTable extends React.Component {
@@ -35,7 +37,14 @@ class ProductTable extends React.Component {
                                     </TableCell>
                                     <TableCell scope="row">{item.name}</TableCell>
                                     <TableCell align="left">{`£ ${item.price}`}</TableCell>
-                                    <TableCell align="right"><MenuIcon /></TableCell>
+                                    <TableCell align="right">
+                                        <IconButton
+                                            aria-label="info"
+                                            onClick={() => { this.props.targetItem(item) }}
+                                        >
+                                            <MenuIcon/>
+                                        </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -50,4 +59,5 @@ export default (ProductTable);
 
 ProductTable.propTypes = {
     products: PropTypes.array.isRequired,
+    targetItem: PropTypes.func.isRequired,
 };

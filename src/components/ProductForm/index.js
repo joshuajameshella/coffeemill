@@ -10,35 +10,22 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {useFormik} from "formik";
-import {v4 as uuidv4} from "uuid";
-import {UploadImage, UploadImageTest} from "../../queries/image";
-import {AddCoffee} from "../../queries/coffee";
-
-// Alert is the function which renders the Success or Failure of Admin functions
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { useFormik } from "formik";
+import LinearProgress from '@material-ui/core/LinearProgress';
+import styles from './styles.module.css';
+import ImageUpload from "./imageUpload";
+import { CreateRecord, EditRecord } from './constructor'
 
 // SubmitData takes the form-values, formats the data, and sends it to the API queries.
-function SubmitData(values) {
-
-    // Set a new unique image identifier
-    const UUID = uuidv4();
-    return UploadImageTest(values.productImage, UUID)
-        .then(() => {
-
-            const coffeeData = {
-                name: values.productName ? values.productName : "",
-                price: values.productPrice ? values.productPrice : "",
-                image: "https://coffeemillandcakesstorage.s3.eu-west-2.amazonaws.com/"+UUID+".jpg",
-                description: values.productDescription ? values.productDescription : "",
-                visible: values.productVisible,
-            }
-
-            // Is the image has successfully been uploaded to S3 bucket, add the product description
-            return AddCoffee(coffeeData)
-        }).catch(() => {});
+function SubmitData(values, props) {
+    switch (props.formFunction) {
+        case 'Create':
+            return CreateRecord(values);
+        case 'Edit':
+            return EditRecord(values, props);
+        default:
+            return new Promise((resolve, reject) => { reject() })
+    }
 }
 
 // ProductForm is the input form shown to admin users, which they can use to add data to the database
@@ -48,23 +35,21 @@ const ProductForm = (props) => {
     const [priceErr, setPriceErr] = useState(false);
     const [descriptionErr, setDescriptionErr] = useState(false);
     const [imageErr, setImageErr] = useState(false);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarStatus, setSnackbarStatus] = useState("");
-    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
-            productCategory: 'coffee',
-            productName: '',
-            productPrice: '',
-            productDescription: '',
-            productVisible: true,
-            productImage: props.image,
+            productID: props.initialValues._id,
+            productCategory: props.initialValues.category,
+            productName: props.initialValues.name,
+            productPrice: props.initialValues.price,
+            productDescription: props.initialValues.description,
+            productVisible: props.initialValues.visible,
+            productImage: props.initialValues.image,
         },
 
         onSubmit: values => {
             let formError = false;
-            values.productImage = props.image;
 
             setNameErr(false);
             setPriceErr(false);
@@ -90,125 +75,150 @@ const ProductForm = (props) => {
 
             // If no errors are present in the form, submit data
             if (!formError) {
-                SubmitData(values)
+                setIsLoading(true);
+                SubmitData(values, props)
                     .then(() => {
-                        setSnackbarStatus("success");
-                        setSnackbarMessage("Successfully Added Coffee!");
-                        setSnackbarOpen(true);
+                        setIsLoading(false);
+                        props.onSubmit({ status: 'success', message: 'Successfully Added Product!', open: true })
+                        props.onClose();
                     }).catch((err) => {
-                    setSnackbarStatus("error");
-                    setSnackbarMessage(err.message);
-                    setSnackbarOpen(true);
+                    setIsLoading(false);
+                    props.onSubmit({ status: 'success', message: 'Unable to Add Product...', open: true })
                 })
             }
         }
     });
 
     return (
-        <form encType="multipart/form-data" onSubmit={formik.handleSubmit}>
-            <TextField
-                select
-                id="productCategory"
-                name="productCategory"
-                label="Product Category"
-                variant="outlined"
-                onChange={formik.handleChange}
-                value={formik.values.productCategory}
-                fullWidth={true}
-                style={{ margin: '10px 0 10px 0' }}
-            >
-                <MenuItem value={"coffee"} style={{ padding: 20 }}>Coffee</MenuItem>
-                <MenuItem value={"treats"} style={{ padding: 20 }}>Treats</MenuItem>
-                <MenuItem value={"cakes"} style={{ padding: 20 }}>Cakes</MenuItem>
-            </TextField>
+        <>
+            <form encType="multipart/form-data" onSubmit={formik.handleSubmit}>
 
-            <TextField
-                id="productName"
-                name="productName"
-                label="Product Name"
-                variant="outlined"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.productName}
-                fullWidth={true}
-                style={{ margin: '10px 0 10px 0' }}
-                error={nameErr}
-                helperText={nameErr ? "Product name must be present" : ''}
-            />
+                <div className={styles.image_container}>
+                    <ImageUpload
+                        imageData={formik.values.productImage}
+                        handleChange={(data) => {
+                            formik.setFieldValue('productImage', data);
+                        }}
+                    />
+                </div>
 
-            <TextField
-                id="productPrice"
-                name="productPrice"
-                label="Product Price"
-                variant="outlined"
-                onChange={formik.handleChange}
-                value={formik.values.productPrice}
-                fullWidth={true}
-                style={{ margin: '10px 0 10px 0' }}
-                InputProps={{
-                    startAdornment: <InputAdornment position="start">£</InputAdornment>,
-                }}
-                error={priceErr}
-                helperText={priceErr ? "Product price must be present" : ''}
-            />
+                <div className={styles.info_container}>
+                    <TextField
+                        select
+                        id="productCategory"
+                        name="productCategory"
+                        label="Product Category"
+                        variant="outlined"
+                        onChange={formik.handleChange}
+                        value={formik.values.productCategory}
+                        fullWidth={true}
+                        disabled={isLoading || props.formFunction === 'Edit' }
+                        style={{ margin: '10px 0 10px 0' }}
+                    >
+                        <MenuItem value={"coffee"} style={{ padding: 20 }}>Coffee</MenuItem>
+                        <MenuItem value={"treats"} style={{ padding: 20 }}>Treats</MenuItem>
+                        <MenuItem value={"cakes"} style={{ padding: 20 }}>Cakes</MenuItem>
+                    </TextField>
 
-            <TextField
-                id="productDescription"
-                name="productDescription"
-                label="Product Description"
-                variant="outlined"
-                type="text"
-                multiline={true}
-                rows={4}
-                onChange={formik.handleChange}
-                value={formik.values.productDescription}
-                fullWidth={true}
-                style={{ margin: '10px 0 10px 0' }}
-                error={descriptionErr}
-                helperText={descriptionErr ? "Product description must be present" : ''}
-            />
+                    <TextField
+                        id="productName"
+                        name="productName"
+                        label="Product Name"
+                        variant="outlined"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.productName}
+                        fullWidth={true}
+                        disabled={isLoading}
+                        style={{ margin: '10px 0 10px 0' }}
+                        error={nameErr}
+                        helperText={nameErr ? "Product name must be present" : ''}
+                    />
 
-            <FormLabel
-                style={{ width: '100%', marginTop: '20px' }}
-                component="legend"
-            >
-                Show Product on Website?
-            </FormLabel>
-            <FormGroup >
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={formik.values.productVisible}
-                            onChange={(e) => {
-                                formik.setFieldValue('productVisible', e.target.checked)
-                            }}
+                    <TextField
+                        id="productPrice"
+                        name="productPrice"
+                        label="Product Price"
+                        variant="outlined"
+                        onChange={formik.handleChange}
+                        disabled={isLoading}
+                        value={formik.values.productPrice}
+                        fullWidth={true}
+                        style={{ margin: '10px 0 10px 0' }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">£</InputAdornment>,
+                        }}
+                        error={priceErr}
+                        helperText={priceErr ? "Product price must be present" : ''}
+                    />
+
+                    <TextField
+                        id="productDescription"
+                        name="productDescription"
+                        label="Product Description"
+                        variant="outlined"
+                        type="text"
+                        multiline={true}
+                        rows={4}
+                        onChange={formik.handleChange}
+                        value={formik.values.productDescription}
+                        fullWidth={true}
+                        disabled={isLoading}
+                        style={{ margin: '10px 0 10px 0' }}
+                        error={descriptionErr}
+                        helperText={descriptionErr ? "Product description must be present" : ''}
+                    />
+
+                    <FormLabel
+                        style={{ width: '100%', marginTop: '20px' }}
+                        component="legend"
+                        disabled={isLoading}
+                    >
+                        Show Product on Website?
+                    </FormLabel>
+                    <FormGroup >
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    disabled={isLoading}
+                                    checked={formik.values.productVisible}
+                                    onChange={(e) => {
+                                        formik.setFieldValue('productVisible', e.target.checked)
+                                    }}
+                                />
+                            }
+                            label="Product Visible"
                         />
-                    }
-                    label="Product Visible"
-                />
 
-                <Button
-                    style={{ margin: '40px 0' }}
-                    fullWidth={true}
-                    variant="outlined"
-                    type="submit"
-                >
-                    Add Product
-                </Button>
-            </FormGroup>
+                        <div style={ isLoading ? {} : { display: 'none' } }>
+                            <LinearProgress className={styles.linear_loading}/>
+                            <p className={styles.loading_text} >
+                                Large image files may take a few minutes to upload...
+                            </p>
+                        </div>
 
-            <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={() => { setSnackbarOpen(false) }}>
-                <Alert onClose={() => { setSnackbarOpen(false) }} severity={snackbarStatus}>
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
+                        <Button
+                            style={{ margin: '40px 0' }}
+                            fullWidth={true}
+                            variant="outlined"
+                            type="submit"
+                            disabled={isLoading}
+                        >{`Submit`}</Button>
 
-        </form>
+                    </FormGroup>
+
+                </div>
+
+            </form>
+        </>
     );
 }
 
 export default (ProductForm);
 
 ProductForm.propTypes = {
-    image: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    formFunction: PropTypes.string.isRequired,
+    initialValues: PropTypes.object.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
