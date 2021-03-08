@@ -25,7 +25,7 @@ export function GetAllProducts(category, adminView) {
     });
 
     if (adminView) {
-        request.headers.set('Authorization', localStorage.getItem('JWT_token'));
+        request.headers.set('Authorization', 'Bearer ' + localStorage.getItem('JWT_token'));
     }
 
     return MakeRequest(request);
@@ -44,7 +44,7 @@ export function AddProduct(data, category) {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('JWT_token')
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT_token')
         },
         body: JSON.stringify(payload),
         method: 'POST'
@@ -76,7 +76,7 @@ export function EditProduct(data, category) {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT_token')
         },
         body: JSON.stringify(payload),
         method: 'PUT'
@@ -101,7 +101,7 @@ export function RemoveProduct(category, id) {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT_token')
         },
         method: 'DELETE'
     });

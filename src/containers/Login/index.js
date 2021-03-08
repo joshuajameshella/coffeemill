@@ -9,8 +9,8 @@ import { UserLogin } from '../../queries/user';
 // If the password matches a known entry, they are granted access to the admin page.
 class Login extends React.Component {
     state = {
-        username: "josh@hellawell.co.uk",
-        password: "Pyramid1!",
+        username: '',
+        password: '',
         error: '',
     }
 
