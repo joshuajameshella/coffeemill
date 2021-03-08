@@ -9,7 +9,8 @@ export async function UploadImage(imageData, uuid) {
     const request = new Request(url, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT_token')
         },
         method: 'POST',
         body: JSON.stringify(payload)
@@ -28,14 +29,15 @@ export async function UploadImage(imageData, uuid) {
     });
 }
 
-// DeleteImage ...
+// DeleteImage takes the image ID, and removes the image from the S3 Bucket
 export async function DeleteImage(uuid) {
 
     let payload = { id: uuid };
     const request = new Request(url + uuid, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT_token')
         },
         method: 'DELETE',
         body: JSON.stringify(payload)
@@ -48,7 +50,7 @@ export async function DeleteImage(uuid) {
     });
 }
 
-// UpdateImage ...
+// UpdateImage takes the image UUID in question, and the new image data used to update it
 export async function UpdateImage(uuid, imageData) {
 
     // Remove the old image from the S3 Bucket
