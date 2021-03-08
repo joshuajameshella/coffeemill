@@ -62,19 +62,19 @@ class Admin extends React.Component {
     }
 
     populateData = () => {
-        GetAllProducts("coffee").then((data) => {
+        GetAllProducts("coffee", true).then((data) => {
             this.setState({ coffee: data });
         }).catch((err) => {
             console.log("Unable to retrieve Coffee Data: " + err);
         });
 
-        GetAllProducts("treats").then((data) => {
+        GetAllProducts("treats", true).then((data) => {
             this.setState({ treats: data });
         }).catch((err) => {
             console.log("Unable to retrieve Treats Data: " + err);
         });
 
-        GetAllProducts("cakes").then((data) => {
+        GetAllProducts("cakes", true).then((data) => {
             this.setState({ cakes: data });
         }).catch((err) => {
             console.log("Unable to retrieve Cakes Data: " + err);
@@ -186,9 +186,9 @@ class Admin extends React.Component {
                     {this.state.modalOpen ?
                         <AdminModal
                             onClose={this.handleClose}
+                            onSubmit={(data) => this.handleSnackbar(data)}
                             formFunction={this.state.formFunction}
                             initialValues={this.state.targetData}
-                            onSubmit={(data) => this.handleSnackbar(data)}
                         />
                     : ''}
                 </div>

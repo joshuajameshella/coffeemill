@@ -20,19 +20,19 @@ class Menu extends React.Component {
 
     componentDidMount() {
 
-        GetAllProducts("coffee").then((data) => {
+        GetAllProducts("coffee", false).then((data) => {
             this.setState({ coffee: data });
         }).catch((err) => {
             console.log("Unable to retrieve Coffee Data: " + err);
         });
 
-        GetAllProducts("treats").then((data) => {
+        GetAllProducts("treats", false).then((data) => {
             this.setState({ treats: data });
         }).catch((err) => {
             console.log("Unable to retrieve Treats Data: " + err);
         });
 
-        GetAllProducts("cakes").then((data) => {
+        GetAllProducts("cakes", false).then((data) => {
             this.setState({ cakes: data });
         }).catch((err) => {
             console.log("Unable to retrieve Cakes Data: " + err);
@@ -74,7 +74,7 @@ class Menu extends React.Component {
                 </div>
 
                 <div hidden={this.state.value !== 1}>
-                    {this.state.coffee.length === 0 ?
+                    {this.state.treats.length === 0 ?
                         <p className={styles.menu_pointer}>{"Unable to find any treats data..."}</p>
                         :
                         <Grid container spacing={3}>

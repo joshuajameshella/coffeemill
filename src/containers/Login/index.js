@@ -3,17 +3,15 @@ import styles from './styles.module.css';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
+import { UserLogin } from '../../queries/user';
+
 // Login is the entrypoint for admin users to enter their password, and store the result in local storage.
 // If the password matches a known entry, they are granted access to the admin page.
 class Login extends React.Component {
     state = {
-        tokenInput: ""
-    }
-
-    handleChange = (event) => {
-        this.setState({
-            tokenInput: event.target.value,
-        });
+        username: "josh@hellawell.co.uk",
+        password: "Pyramid1!",
+        error: '',
     }
 
     render() {
@@ -32,22 +30,51 @@ class Login extends React.Component {
                 <TextField
                     required
                     variant={'outlined'}
+                    label={"Username"}
+                    defaultValue={this.state.username}
+                    className={styles.input}
+                    style={{ margin: '0px 25% 10px 25%' }}
+                    onChange={(e) => {
+                        this.setState({ username: e.target.value })
+                    }}
+                />
+
+                <TextField
+                    required
+                    variant={'outlined'}
                     label={"Password"}
                     type={'password'}
-                    defaultValue={""}
+                    defaultValue={this.state.username}
                     className={styles.input}
                     style={{ margin: '0px 25% 0px 25%' }}
-                    onChange={(e) => this.handleChange(e)}
+                    onChange={(e) => {
+                        this.setState({ password: e.target.value })
+                    }}
                 />
+
                 <Button
                     onClick={() => {
-                        localStorage.setItem('token', this.state.tokenInput);
-                        window.location.href = '/admin';
+                        UserLogin(this.state.username, this.state.password)
+                            .then((response) => {
+                                if (response.token) {
+                                    localStorage.setItem('JWT_token', response.token);
+                                    window.location.href = '/admin';
+                                } else {
+                                    localStorage.clear();
+                                    this.setState({ error: 'Login info not recognised' });
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                this.setState({ error: 'Error on server...' });
+                            });
                     }}
                     style={{ margin: '20px 40% 0px 40%' }}
                     className={styles.button}
                     variant={"outlined"}
                     >{"Submit"}</Button>
+
+                <p className={styles.error_message}>{this.state.error}</p>
             </form>
         );
     }

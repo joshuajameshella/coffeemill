@@ -66,6 +66,18 @@
     margin-bottom: 20px;
 }
 
+.closeButtonStyle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.deleteButtonStyle {
+    position: absolute;
+    top: 15px;
+    right: 55px;
+}
+
 @media (max-width: 650px) {
     .image_container {
         width: 100%;

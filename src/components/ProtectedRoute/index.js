@@ -1,19 +1,18 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
-import { Login } from '../../credentials';
+
+// --- Protected Route ---
+// If the user has a JWT token in their Local Storage, allow access to the protected route.
+// This is not a perfect solution - someone could manually set a random token in the browser.
+// However, none of the admin API requests would work without the correct token.
 
 // ProtectedRoute is the security protecting specific components from being accessed
 class ProtectedRoute extends React.Component {
     render() {
-
         const Component = this.props.component;
-        const isAuthenticated = localStorage.getItem('token');
+        const authToken = localStorage.getItem('JWT_token');
 
-        return isAuthenticated === Login.password ? (
-          <Component />
-        ) : (
-            <Redirect to={{ pathname: '/login' }} />
-        );
+        return authToken ? <Component /> : <Redirect to={{ pathname: '/login' }} />
     }
 }
 

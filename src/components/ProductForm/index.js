@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
-import MuiAlert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
@@ -14,7 +12,7 @@ import { useFormik } from "formik";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import styles from './styles.module.css';
 import ImageUpload from "./imageUpload";
-import { CreateRecord, EditRecord } from './constructor'
+import { CreateRecord, EditRecord, RemoveRecord } from './constructor'
 
 // SubmitData takes the form-values, formats the data, and sends it to the API queries.
 function SubmitData(values, props) {
@@ -193,7 +191,7 @@ const ProductForm = (props) => {
                         <div style={ isLoading ? {} : { display: 'none' } }>
                             <LinearProgress className={styles.linear_loading}/>
                             <p className={styles.loading_text} >
-                                Large image files may take a few minutes to upload...
+                                Large image files may take a few minutes to process...
                             </p>
                         </div>
 
@@ -204,6 +202,29 @@ const ProductForm = (props) => {
                             type="submit"
                             disabled={isLoading}
                         >{`Submit`}</Button>
+
+                        <Button
+                            fullWidth={true}
+                            variant="outlined"
+                            style={{
+                                color: '#A71D00',
+                                borderColor: '#A71D00',
+                                display: props.formFunction === 'Edit' ? '' : 'none'
+                            }}
+                            disabled={isLoading}
+                            onClick={() => {
+                                setIsLoading(true);
+                                RemoveRecord(props).then(() => {
+                                    setIsLoading(false);
+                                    props.onSubmit({ status: 'success', message: 'Successfully Deleted Product!', open: true })
+                                    props.onClose();
+                                }).catch(() => {
+                                    setIsLoading(false);
+                                    props.onSubmit({ status: 'error', message: 'Unable to Delete Product...', open: true })
+                                    props.onClose();
+                                })
+                            }}
+                        >{`Delete Product`}</Button>
 
                     </FormGroup>
 

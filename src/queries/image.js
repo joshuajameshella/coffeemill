@@ -1,5 +1,6 @@
 
 let url = "http://192.168.0.36:8080/image/";
+// let url = "http://3.14.10.121:8080/image/"
 
 // UploadImage takes the image location, and encodes it into base64 before sending it via the API.
 export async function UploadImage(imageData, uuid) {

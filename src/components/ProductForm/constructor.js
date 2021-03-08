@@ -1,9 +1,8 @@
-
 import { v4 as uuidv4 } from "uuid";
-import { UpdateImage, UploadImage } from "../../queries/image";
-import { AddProduct, EditProduct, GetProduct } from "../../queries";
+import { UpdateImage, UploadImage, DeleteImage } from "../../queries/image";
+import { AddProduct, EditProduct, GetProduct, RemoveProduct } from "../../queries";
 
-// CreateRecord ...
+// CreateRecord takes the form values, and inserts the data into MongoDB
 export function CreateRecord(values) {
 
     // Generate the data used when inserting data into MongoDB
@@ -25,7 +24,7 @@ export function CreateRecord(values) {
 }
 
 
-// EditRecord ...
+// EditRecord takes the old record data (via props), and updates the MongoDB record with the new form data (values)
 export function EditRecord(values, props) {
 
     // To edit the record, the old data identifiers (MongoDB ID & S3 UUID) must be retrieved from the database.
@@ -54,4 +53,16 @@ export function EditRecord(values, props) {
                 }).catch((e) => { return e })
             }
         }).catch((e) => { return e });
+}
+
+// RemoveRecord takes the record data, attempts removes the image from S3 bucket, and on success, removes the product
+// data from MongoDB.
+export function RemoveRecord(props) {
+
+    // Deconstruct the image S3 URL to find the UUID to remove from the S3 Bucket
+    const UUID = props.initialValues.image.split(".com/")[1].replace(".jpg", "");
+
+    return DeleteImage(UUID).then(() => {
+        return RemoveProduct(props.initialValues.category, props.initialValues._id);
+    }).catch((e) => { return e });
 }

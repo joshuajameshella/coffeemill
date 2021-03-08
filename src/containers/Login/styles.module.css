@@ -41,3 +41,11 @@
     float: left;
     width: 20%;
 }
+
+.error_message {
+    position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    color: darkred;
+}

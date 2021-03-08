@@ -1,11 +1,12 @@
 
 let url = 'http://192.168.0.36:8080/';
+// let url = "http://3.14.10.121:8080/"
 
 export function GetProduct(category, id) {
     const request = new Request(url + category + '/' + id, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         method: 'GET'
     });
@@ -13,7 +14,8 @@ export function GetProduct(category, id) {
     return MakeRequest(request);
 }
 
-export function GetAllProducts(category) {
+export function GetAllProducts(category, adminView) {
+
     const request = new Request(url + category, {
         headers: {
             'Accept': 'application/json',
@@ -21,6 +23,10 @@ export function GetAllProducts(category) {
         },
         method: 'GET'
     });
+
+    if (adminView) {
+        request.headers.set('Authorization', localStorage.getItem('JWT_token'));
+    }
 
     return MakeRequest(request);
 }
@@ -37,7 +43,8 @@ export function AddProduct(data, category) {
     const request = new Request(url + category, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('JWT_token')
         },
         body: JSON.stringify(payload),
         method: 'POST'
@@ -68,7 +75,8 @@ export function EditProduct(data, category) {
     const request = new Request(url + category + '/' + data.id, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
         },
         body: JSON.stringify(payload),
         method: 'PUT'
@@ -83,6 +91,30 @@ export function EditProduct(data, category) {
         return {
             status: res.status,
             message: 'Unable to update coffee data'
+        };
+    });
+}
+
+export function RemoveProduct(category, id) {
+
+    const request = new Request(url + category + '/' + id, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
+        method: 'DELETE'
+    });
+
+    return fetch(request).then(res => {
+        return {
+            status: res.status,
+            message: 'Successfully removed product data'
+        };
+    }).catch(res => {
+        return {
+            status: res.status,
+            message: 'Unable to remove product data'
         };
     });
 }
