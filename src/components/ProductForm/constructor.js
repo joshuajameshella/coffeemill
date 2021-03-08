@@ -39,6 +39,7 @@ export function EditRecord(values, props) {
                 price: values.productPrice ? values.productPrice : "",
                 image: "https://coffeemillandcakesstorage.s3.eu-west-2.amazonaws.com/"+UUID+".jpg",
                 description: values.productDescription ? values.productDescription : "",
+                priority: props.initialValues.priority,
                 visible: values.productVisible,
             }
 

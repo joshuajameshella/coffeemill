@@ -6,12 +6,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import AdminModal from "../../components/AdminModal";
+import ReorderModal from '../../components/ReorderModal';
 import ProductTable from "../../components/ProductTable";
 import styles from './styles.module.css';
 import { GetAllProducts } from '../../queries/index';
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-
 
 // Set the length of time the window remains open after data is submitted (ms)
 const modalTimeout = 5000;
@@ -19,6 +19,14 @@ const modalTimeout = 5000;
 // Alert is the function which renders the Success or Failure of Admin functions
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+// JS style guide for MUI Button Component
+const buttonStyling = {
+    position: 'relative',
+    float: 'left',
+    width: 200,
+    margin: '0 calc(25% - 100px) 0 calc(25% - 100px)'
 }
 
 // Admin is the terminal used by admin users to modify the website data. It sits behind a
@@ -29,7 +37,8 @@ class Admin extends React.Component {
         super(props);
         this.state = {
             value: "coffee",
-            modalOpen: false,
+            productModalOpen: false,
+            rearrangeModalOpen: false,
             snackbar: {
                 severity: 'success',
                 message: '',
@@ -41,10 +50,8 @@ class Admin extends React.Component {
             treats: [],
             cakes: [],
         };
-        this.toggleModal = this.toggleModal.bind(this);
+        this.toggleProductModal = this.toggleProductModal.bind(this);
     }
-
-
 
     componentDidMount = () => {
         this.populateData();
@@ -83,7 +90,8 @@ class Admin extends React.Component {
 
     handleClose = () => {
         this.setState({
-            modalOpen: false,
+            productModalOpen: false,
+            rearrangeModalOpen: false,
             formFunction: 'Create',
             targetData: {
                 _id: '',
@@ -97,9 +105,15 @@ class Admin extends React.Component {
         })
     }
 
-    toggleModal = () => {
+    toggleProductModal = () => {
         this.setState({
-            modalOpen: !this.state.modalOpen,
+            productModalOpen: !this.state.productModalOpen,
+        });
+    }
+
+    toggleRearrangeModal = () => {
+        this.setState({
+            rearrangeModalOpen: !this.state.rearrangeModalOpen,
         });
     }
 
@@ -107,7 +121,7 @@ class Admin extends React.Component {
         this.setState({
             formFunction: 'Edit',
             targetData: data,
-            modalOpen: true
+            productModalOpen: true
         });
     }
 
@@ -134,10 +148,19 @@ class Admin extends React.Component {
                     <Button
                         variant="outlined"
                         color="primary"
-                        onClick={() => {this.toggleModal()}}
-                        style={{ width: 200, margin: '0 calc(50% - 100px) 0 calc(50% - 100px)' }}
+                        onClick={() => {this.toggleProductModal()}}
+                        style={buttonStyling}
                     >
                         Add new product
+                    </Button>
+
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => {this.toggleRearrangeModal()}}
+                        style={buttonStyling}
+                    >
+                        Reorder Products
                     </Button>
 
                     <TextField
@@ -183,7 +206,7 @@ class Admin extends React.Component {
                         />
                     : ''}
 
-                    {this.state.modalOpen ?
+                    {this.state.productModalOpen ?
                         <AdminModal
                             onClose={this.handleClose}
                             onSubmit={(data) => this.handleSnackbar(data)}
@@ -191,6 +214,14 @@ class Admin extends React.Component {
                             initialValues={this.state.targetData}
                         />
                     : ''}
+
+                    {this.state.rearrangeModalOpen ?
+                        <ReorderModal
+                            onClose={this.handleClose}
+                            onSubmit={(data) => this.handleSnackbar(data)}
+                            target={this.state.value}
+                        />
+                        : ''}
                 </div>
 
 

@@ -69,6 +69,7 @@ export function EditProduct(data, category) {
         price: data.price,
         image: data.image,
         description: data.description,
+        priority: data.priority,
         visible: data.visible,
     }
 
