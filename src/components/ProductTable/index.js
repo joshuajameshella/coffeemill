@@ -11,7 +11,6 @@ import styles from './styles.module.css';
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 
-
 // ProductTable ...
 class ProductTable extends React.Component {
     render() {

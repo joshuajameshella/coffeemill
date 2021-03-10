@@ -23,3 +23,10 @@
     font-size: 15px;
     font-style: italic;
 }
+
+.loading_icon {
+    position: relative;
+    float: left;
+    top: 40px;
+    left: calc(50% - 20px);
+}

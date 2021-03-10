@@ -31,6 +31,9 @@ export function EditRecord(values, props) {
     return GetProduct(props.initialValues.category, props.initialValues._id)
         .then((r) => {
 
+            // If no data is returned, return nothing
+            if (!r) { return null }
+
             // Generate the data used when inserting data into MongoDB
             const UUID = r.image.split(".com/")[1].replace(".jpg", "");
             const productData = {
@@ -47,7 +50,8 @@ export function EditRecord(values, props) {
             // Otherwise, update the image in the S3 Bucket, and (upon it's success), update the product data.
             // This is done to reduce loading times for when managing large image files are not necessary.
             if (values.productImage.includes("https://")) {
-                return EditProduct(productData, props.initialValues.category);
+                return EditProduct(productData, props.initialValues.category)
+                    .then((r) => { return r }).catch((e) => { return e });
             } else {
                 return UpdateImage(UUID, values.productImage).then((r) => {
                     return EditProduct(productData, props.initialValues.category);

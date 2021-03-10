@@ -75,13 +75,25 @@ const ProductForm = (props) => {
             if (!formError) {
                 setIsLoading(true);
                 SubmitData(values, props)
-                    .then(() => {
+                    .then((res) => {
                         setIsLoading(false);
-                        props.onSubmit({ status: 'success', message: 'Successfully Added Product!', open: true })
-                        props.onClose();
+                        let snackbarInfo = { severity: 'success', message: '', open: true };
+                        if (res) {
+                            if (res.status >= 400) {
+                                snackbarInfo.severity = 'error';
+                                snackbarInfo.message = `Error: ${res.status}`;
+                            } else {
+                                snackbarInfo.message = `Successfully ${props.formFunction}ed Product!`;
+                                props.onClose();
+                            }
+                        } else {
+                            snackbarInfo.severity = 'error';
+                            snackbarInfo.message = `Unable to ${props.formFunction} product`;
+                        }
+                        this.props.onSubmit(snackbarInfo);
                     }).catch((err) => {
                     setIsLoading(false);
-                    props.onSubmit({ status: 'success', message: 'Unable to Add Product...', open: true })
+                    props.onSubmit({ severity: 'error', message: `Unable to ${props.formFunction} product`, open: true })
                 })
             }
         }
@@ -214,10 +226,18 @@ const ProductForm = (props) => {
                             disabled={isLoading}
                             onClick={() => {
                                 setIsLoading(true);
-                                RemoveRecord(props).then(() => {
+                                RemoveRecord(props).then((res) => {
+                                    if (res) {
+                                        if (res.status >= 400) {
+                                            props.onSubmit({ status: 'error', message: `Unable to Delete Product: ${res.status}`, open: true });
+                                        } else {
+                                            props.onSubmit({ status: 'success', message: `Product Deleted!`, open: true });
+                                            props.onClose();
+                                        }
+                                    } else {
+                                        props.onSubmit({ status: 'error', message: `Unable to Delete Product`, open: true });
+                                    }
                                     setIsLoading(false);
-                                    props.onSubmit({ status: 'success', message: 'Successfully Deleted Product!', open: true })
-                                    props.onClose();
                                 }).catch(() => {
                                     setIsLoading(false);
                                     props.onSubmit({ status: 'error', message: 'Unable to Delete Product...', open: true })

@@ -46,9 +46,18 @@ class Admin extends React.Component {
             },
             formFunction: 'Create',
             targetData: {},
-            coffee: [],
-            treats: [],
-            cakes: [],
+            coffee: {
+                data: [],
+                loading: true
+            },
+            treats: {
+                data: [],
+                loading: true
+            },
+            cakes: {
+                data: [],
+                loading: true
+            },
         };
         this.toggleProductModal = this.toggleProductModal.bind(this);
     }
@@ -70,19 +79,19 @@ class Admin extends React.Component {
 
     populateData = () => {
         GetAllProducts("coffee", true).then((data) => {
-            this.setState({ coffee: data });
+            if (data) { this.setState({ coffee: { data: data, loading: false } }) }
         }).catch((err) => {
             console.log("Unable to retrieve Coffee Data: " + err);
         });
 
         GetAllProducts("treats", true).then((data) => {
-            this.setState({ treats: data });
+            if (data) { this.setState({ treats: { data: data, loading: false } }) }
         }).catch((err) => {
             console.log("Unable to retrieve Treats Data: " + err);
         });
 
         GetAllProducts("cakes", true).then((data) => {
-            this.setState({ cakes: data });
+            if (data) { this.setState({ cakes: { data: data, loading: false } }) }
         }).catch((err) => {
             console.log("Unable to retrieve Cakes Data: " + err);
         });
@@ -180,7 +189,7 @@ class Admin extends React.Component {
 
                     {this.state.value === "coffee" ?
                         <ProductTable
-                            products={this.state.coffee}
+                            products={this.state.coffee.data}
                             targetItem={(data) => {
                                 data.category = 'coffee';
                                 this.handleEditModal(data);
@@ -189,7 +198,7 @@ class Admin extends React.Component {
                     : ''}
                     {this.state.value === "treats" ?
                         <ProductTable
-                            products={this.state.treats}
+                            products={this.state.treats.data}
                             targetItem={(data) => {
                                 data.category = 'treats';
                                 this.handleEditModal(data);
@@ -198,7 +207,7 @@ class Admin extends React.Component {
                     : ''}
                     {this.state.value === "cakes" ?
                         <ProductTable
-                            products={this.state.cakes}
+                            products={this.state.cakes.data}
                             targetItem={(data) => {
                                 data.category = 'cakes';
                                 this.handleEditModal(data);

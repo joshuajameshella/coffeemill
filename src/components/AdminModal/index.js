@@ -4,7 +4,6 @@ import Dialog from "@material-ui/core/Dialog";
 import ProductForm from '../ProductForm';
 import styles from './styles.module.css';
 import CloseIcon from "@material-ui/icons/Close";
-import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import IconButton from "@material-ui/core/IconButton";
 
 // AdminModal is the display shown to the user when editing or creating a product

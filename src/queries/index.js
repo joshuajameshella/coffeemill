@@ -51,10 +51,7 @@ export function AddProduct(data, category) {
     });
 
     return fetch(request).then(res => {
-        return {
-            status: res.status,
-            message: 'Successfully uploaded coffee data'
-        };
+        return res;
     }).catch(res => {
         return {
             status: res.status,
