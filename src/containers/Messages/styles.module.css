@@ -1,0 +1,10 @@
+.container {
+    position: relative;
+    float: left;
+    width: calc(100% - 100px);
+    height: auto;
+    max-height: calc(100vh - 71px);
+    margin: 50px 5% 50px 5%;
+    color: #505050;
+    font-weight: 300;
+}

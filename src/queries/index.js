@@ -55,7 +55,7 @@ export function AddProduct(data, category) {
     }).catch(res => {
         return {
             status: res.status,
-            message: 'Unable to upload coffee data'
+            message: 'Unable to upload product data'
         };
     });
 }

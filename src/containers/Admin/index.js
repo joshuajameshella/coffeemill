@@ -12,6 +12,10 @@ import styles from './styles.module.css';
 import { GetAllProducts } from '../../queries/index';
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import IconButton from "@material-ui/core/IconButton";
+import MailOutlinedIcon from '@material-ui/icons/MailOutlined';
+import Badge from '@material-ui/core/Badge';
+import {GetAllMessages} from "../../queries/contact";
 
 // Set the length of time the window remains open after data is submitted (ms)
 const modalTimeout = 5000;
@@ -58,6 +62,7 @@ class Admin extends React.Component {
                 data: [],
                 loading: true
             },
+            unreadMessages: 0
         };
         this.toggleProductModal = this.toggleProductModal.bind(this);
     }
@@ -95,6 +100,18 @@ class Admin extends React.Component {
         }).catch((err) => {
             console.log("Unable to retrieve Cakes Data: " + err);
         });
+
+        GetAllMessages().then((data) => {
+            if (data) {
+                let unreadMessages = 0;
+                data.forEach((item) => {
+                    if (!item.viewed) {
+                        unreadMessages++
+                    }
+                });
+                this.setState({ unreadMessages: unreadMessages })
+            }
+        })
     }
 
     handleClose = () => {
@@ -146,9 +163,23 @@ class Admin extends React.Component {
             <>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography variant="h6" >Admin</Typography>
+                        <Typography variant="h6" >Admin : Products</Typography>
                     </Toolbar>
                 </AppBar>
+
+                    <IconButton
+                        aria-label="close"
+                        href={'/messages'}
+                        style={{
+                            position: 'absolute',
+                            top: 10, right: 20,
+                            color: 'white'
+                        }}
+                    >
+                        <Badge badgeContent={this.state.unreadMessages} color="secondary">
+                            <MailOutlinedIcon/>
+                        </Badge>
+                    </IconButton>
 
                 <div className={styles.admin_body}>
 

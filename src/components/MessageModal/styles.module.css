@@ -1,0 +1,18 @@
+.dialog_body {
+    position: relative;
+    float: left;
+    width: calc(100% - 100px);
+    margin: 50px;
+    overflow: hidden;
+    color: #505050;
+}
+
+.message_title {
+    font-weight: bold;
+    font-size: 25px;
+    margin: 0 0 30px 0;
+}
+
+.message_body {
+    margin-top: 50px;
+}

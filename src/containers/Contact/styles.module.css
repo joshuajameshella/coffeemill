@@ -1,0 +1,28 @@
+.container {
+    position: relative;
+    float: left;
+    width: calc(100% - 40%);
+    height: auto;
+    max-height: calc(100vh - 71px);
+    margin: 25px 20% 25px 20%;
+    color: #505050;
+    font-weight: 300;
+}
+
+.header {
+    position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 50px 0 50px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+}
+
+.subText {
+    position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0 20px 0;
+    line-height: 2;
+}

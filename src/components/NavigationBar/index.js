@@ -43,7 +43,6 @@ class NavigationBar extends React.Component {
                                         href={"/"}
                                         key={social.description}
                                         onClick={() => window.open(social.link,'_blank')}
-                                        // className={styles.social_link}
                                     >
                                         <img
                                             src={social.icon}
