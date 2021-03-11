@@ -9,13 +9,13 @@ import AdminModal from "../../components/AdminModal";
 import ReorderModal from '../../components/ReorderModal';
 import ProductTable from "../../components/ProductTable";
 import styles from './styles.module.css';
-import { GetAllProducts } from '../../queries/index';
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import IconButton from "@material-ui/core/IconButton";
 import MailOutlinedIcon from '@material-ui/icons/MailOutlined';
 import Badge from '@material-ui/core/Badge';
-import {GetAllMessages} from "../../queries/contact";
+import { GetAllProducts } from '../../queries/product';
+import { GetAllMessages } from "../../queries/contact";
 
 // Set the length of time the window remains open after data is submitted (ms)
 const modalTimeout = 5000;
@@ -23,14 +23,6 @@ const modalTimeout = 5000;
 // Alert is the function which renders the Success or Failure of Admin functions
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-// JS style guide for MUI Button Component
-const buttonStyling = {
-    position: 'relative',
-    float: 'left',
-    width: 200,
-    margin: '0 calc(25% - 100px) 0 calc(25% - 100px)'
 }
 
 // Admin is the terminal used by admin users to modify the website data. It sits behind a
@@ -163,7 +155,7 @@ class Admin extends React.Component {
             <>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography variant="h6" >Admin : Products</Typography>
+                        <Typography variant="h6" >Admin</Typography>
                     </Toolbar>
                 </AppBar>
 
@@ -189,7 +181,7 @@ class Admin extends React.Component {
                         variant="outlined"
                         color="primary"
                         onClick={() => {this.toggleProductModal()}}
-                        style={buttonStyling}
+                        className={styles.button}
                     >
                         Add new product
                     </Button>
@@ -198,7 +190,7 @@ class Admin extends React.Component {
                         variant="outlined"
                         color="primary"
                         onClick={() => {this.toggleRearrangeModal()}}
-                        style={buttonStyling}
+                        className={styles.button}
                     >
                         Reorder Products
                     </Button>

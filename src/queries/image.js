@@ -1,12 +1,15 @@
+// image.js
+// -----------------
+// This file contains all the CRUD queries relating to the 'images' database collection.
+// All the following queries are role-protected.
 
-let url = "http://192.168.0.36:8080/image/";
-// let url = "http://3.14.10.121:8080/image/"
+let url = "http://3.14.10.121:8080/"
 
 // UploadImage takes the image location, and encodes it into base64 before sending it via the API.
 export async function UploadImage(imageData, uuid) {
 
     let payload = { image: imageData, name: uuid };
-    const request = new Request(url, {
+    const request = new Request(url + 'image', {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -33,7 +36,7 @@ export async function UploadImage(imageData, uuid) {
 export async function DeleteImage(uuid) {
 
     let payload = { id: uuid };
-    const request = new Request(url + uuid, {
+    const request = new Request(url + `image/${uuid}`, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

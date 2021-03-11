@@ -4,7 +4,7 @@ import { StyledTabs, StyledTab } from './customStyles';
 import Grid from "@material-ui/core/Grid";
 import MenuCard from "../../components/MenuCard";
 import { MobileView } from "react-device-detect";
-import { GetAllProducts } from '../../queries/index';
+import { GetAllProducts } from '../../queries/product';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Menu is the page which contains the data for each item sold at the shop.

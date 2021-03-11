@@ -21,29 +21,33 @@ class Messages extends React.Component {
     }
 
     componentDidMount() {
-        this.reloadData();
+        this.reloadData().then();
     }
 
-    reloadData = () => {
+    async reloadData() {
         GetAllMessages().then((data) => {
             if (data) { this.setState({ messages: data }) }
         });
     }
 
     handleDialogClose = () => {
-        this.setState({ messageDialogOpen: false });
+        this.reloadData().then(() => {
+            this.setState({ messageDialogOpen: false });
+        });
     }
 
     render() {
         return (
             <div className={styles.container}>
+                <h2 className={styles.page_title}>{'User Messages & Enquiries'}</h2>
+
                 <TableContainer component={Paper} >
-                    <Table aria-label="simple table">
+                    <Table>
                         <TableHead>
-                            <TableRow>
-                                <TableCell align="left">{"Date"}</TableCell>
-                                <TableCell align="left">{"Name"}</TableCell>
-                                <TableCell align="left">{"Viewed"}</TableCell>
+                            <TableRow >
+                                <TableCell style={{ fontWeight: 'bold' }} align="left">{"Message Sent"}</TableCell>
+                                <TableCell style={{ fontWeight: 'bold' }} align="left">{"Message From"}</TableCell>
+                                <TableCell>{""}</TableCell>
                                 <TableCell align="left" />
                             </TableRow>
                         </TableHead>
@@ -55,13 +59,15 @@ class Messages extends React.Component {
                                             "en-US", {year: 'numeric', month: 'long', day: 'numeric'})}
                                     </TableCell>
                                     <TableCell scope="row">{item.name ? item.name : '--'}</TableCell>
-                                    <TableCell scope="row">{`${item.viewed ? '' : 'New Message!'}`}</TableCell>
+                                    <TableCell align="left">{item.viewed ? '' :
+                                        <div style={{ height: 10, width: 10, backgroundColor: 'green', borderRadius: '50%' }} />
+                                    }</TableCell>
                                     <TableCell align="right">
                                         <IconButton
+                                            style={{ height: 15, width: 15 }}
                                             aria-label="info"
                                             onClick={() => {
                                                 this.setState({ messageTarget: item._id, messageDialogOpen: true });
-                                                setTimeout(() => {this.reloadData()}, 1000)
                                             }}
                                         >
                                             <MenuIcon/>

@@ -1,9 +1,12 @@
+// product.js
+// -----------------
+// This file contains all the CRUD queries relating to the 'coffees, treats & cakes' database collections.
 
-let url = 'http://192.168.0.36:8080/';
-// let url = "http://3.14.10.121:8080/"
+let url = "http://3.14.10.121:8080/"
 
+// GetProduct retrieves a specific product by collection & ID. This is an open request, so any user can use the query.
 export function GetProduct(category, id) {
-    const request = new Request(url + category + '/' + id, {
+    const request = new Request(url + `${category}/${id}`, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -14,6 +17,8 @@ export function GetProduct(category, id) {
     return MakeRequest(request);
 }
 
+// GetAllProducts returns all products from a specific collection.
+// 'adminView' is a boolean field which determines whether all products are returned, or just the publicly visible ones.
 export function GetAllProducts(category, adminView) {
 
     const request = new Request(url + category, {
@@ -31,6 +36,7 @@ export function GetAllProducts(category, adminView) {
     return MakeRequest(request);
 }
 
+// AddProduct takes the product data & category and inserts it into the database. (Role-Protected)
 export function AddProduct(data, category) {
     const payload = {
         name: data.name,
@@ -60,6 +66,7 @@ export function AddProduct(data, category) {
     });
 }
 
+// EditProduct takes the new product data & product category and updates the database record. (Role-Protected)
 export function EditProduct(data, category) {
     const payload = {
         name: data.name,
@@ -93,6 +100,7 @@ export function EditProduct(data, category) {
     });
 }
 
+// RemoveProduct removes the product ID from the database collection. (Role-Protected)
 export function RemoveProduct(category, id) {
 
     const request = new Request(url + category + '/' + id, {
@@ -117,7 +125,7 @@ export function RemoveProduct(category, id) {
     });
 }
 
-
+// MakeRequest is the 'fetch' function used when making API requests.
 function MakeRequest(request) {
     return fetch(request)
         .then(response => {

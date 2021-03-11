@@ -77,24 +77,17 @@ const ProductForm = (props) => {
                 SubmitData(values, props)
                     .then((res) => {
                         setIsLoading(false);
-                        let snackbarInfo = { severity: 'success', message: '', open: true };
                         if (res) {
                             if (res.status >= 400) {
-                                snackbarInfo.severity = 'error';
-                                snackbarInfo.message = `Error: ${res.status}`;
+                                props.onSubmit({ severity: 'error', message: `Error: ${res.status}`, open: true });
                             } else {
-                                snackbarInfo.message = `Successfully ${props.formFunction}ed Product!`;
+                                props.onSubmit({ severity: 'success', message: `Successfully ${props.formFunction}ed Product!`, open: true });
                                 props.onClose();
                             }
                         } else {
-                            snackbarInfo.severity = 'error';
-                            snackbarInfo.message = `Unable to ${props.formFunction} product`;
+                            props.onSubmit({ severity: 'error', message: `Unable to ${props.formFunction} product`, open: true });
                         }
-                        this.props.onSubmit(snackbarInfo);
-                    }).catch((err) => {
-                    setIsLoading(false);
-                    props.onSubmit({ severity: 'error', message: `Unable to ${props.formFunction} product`, open: true })
-                })
+                    });
             }
         }
     });

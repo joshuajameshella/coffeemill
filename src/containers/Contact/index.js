@@ -40,7 +40,7 @@ class Contact extends React.Component {
     // Validate that the required inputs contain data
     async validateInputs(values) {
         this.setState({ contactInfo: { value: values.contactInfo.value, error: false } });
-        this.setState({ message: { value: values.contactInfo.value, error: false } });
+        this.setState({ message: { value: values.message.value, error: false } });
         if (values.contactInfo.value === '') {
             this.setState({ contactInfo: { value: values.contactInfo.value, error: true } });
         }

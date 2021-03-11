@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import mapboxgl from 'mapbox-gl';
 import { BrowserView } from "react-device-detect";
 import logo from '../../images/simple_logo.png';
-import { MapboxAccessToken } from "../../credentials";
 
+const MapboxAccessToken = "pk.eyJ1Ijoiam9zaHVhamFtZXNoZWxsIiwiYSI6ImNrN2kzcHJscjBjM3kzZnByZTg3MWE1aHkifQ.ux_g44SHiS6gYkPJG1Rltw";
 mapboxgl.accessToken = MapboxAccessToken;
 
 const styles = {

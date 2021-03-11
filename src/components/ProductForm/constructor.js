@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { UpdateImage, UploadImage, DeleteImage } from "../../queries/image";
-import { AddProduct, EditProduct, GetProduct, RemoveProduct } from "../../queries";
+import { AddProduct, EditProduct, GetProduct, RemoveProduct } from "../../queries/product";
 
 // CreateRecord takes the form values, and inserts the data into MongoDB
 export function CreateRecord(values) {
